@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gloomhaven: Jaws of the Lion — Quick Reference</title>
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<style>
+  :root {
+    --ink: #241b10;
+    --ink-soft: #3a2e1e;
+    --parch: #d3c39b;
+    --parch-hi: #e2d5b0;
+    --parch-panel: rgba(238, 228, 197, 0.55);
+    --banner: #221a11;
+    --banner-hi: #35291a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #4a4238; }
+  body { font-family: "Alegreya", serif; color: var(--ink); }
+
+  @page { size: A4; margin: 0; }
+  .page {
+    width: 210mm; height: 297mm;
+    position: relative; overflow: hidden;
+    background-color: var(--parch);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.14 0 0 0 0 0.10 0 0 0 0 0.05 0 0 0 0.9 -0.62'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23s)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.011' numOctaves='3' stitchTiles='stitch' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.27 0 0 0 0 0.14 0 0 0 0.34 -0.07'/%3E%3C/filter%3E%3Crect width='640' height='640' filter='url(%23m)'/%3E%3C/svg%3E"),
+      radial-gradient(ellipse 120% 90% at 50% 40%, rgba(246,238,212,0.65), rgba(190,172,128,0.35) 78%, rgba(150,131,90,0.5) 100%);
+  }
+  @media screen {
+    body { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 20px 0; }
+    .page { box-shadow: 0 6px 30px rgba(0,0,0,0.5); }
+  }
+  @media print { .page { page-break-after: always; } }
+
+  /* ── card frame ─────────────────────────────── */
+  .frame {
+    position: absolute; inset: 6mm;
+    border: 1.4mm solid var(--ink);
+    border-radius: 5mm;
+    box-shadow: inset 0 0 0 0.4mm var(--parch-hi), inset 0 0 0 0.9mm var(--accent);
+    pointer-events: none;
+  }
+  .corner { position: absolute; width: 8mm; height: 8mm; border: 1.4mm solid var(--ink); }
+  .corner.tl { top: 4mm; left: 4mm; border-right: 0; border-bottom: 0; border-top-left-radius: 3mm; }
+  .corner.tr { top: 4mm; right: 4mm; border-left: 0; border-bottom: 0; border-top-right-radius: 3mm; }
+  .corner.bl { bottom: 4mm; left: 4mm; border-right: 0; border-top: 0; border-bottom-left-radius: 3mm; }
+  .corner.br { bottom: 4mm; right: 4mm; border-left: 0; border-top: 0; border-bottom-right-radius: 3mm; }
+
+  .watermark { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .watermark img { width: 58%; opacity: 0.06; }
+
+  /* ── header banner ──────────────────────────── */
+  header { position: absolute; top: 9mm; left: 0; right: 0; display: flex; justify-content: center; }
+  .banner {
+    position: relative;
+    background: linear-gradient(180deg, var(--banner-hi), var(--banner));
+    color: var(--parch-hi);
+    padding: 2.6mm 14mm 2.2mm;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 6mm) 50%, 100% 100%, 0 100%, 6mm 50%);
+    text-align: center;
+    box-shadow: 0 1mm 2mm rgba(0,0,0,0.35);
+  }
+  .banner h1 { font-family: "Pirata One", serif; font-weight: 400; font-size: 25pt; letter-spacing: 0.06em; line-height: 1; }
+  .banner .sub { font-family: "Alegreya SC", serif; font-size: 8pt; letter-spacing: 0.28em; color: var(--accent-lite); margin-top: 0.8mm; }
+  .medallion {
+    position: absolute; top: 8mm; left: 14mm;
+    width: 17mm; height: 17mm; border-radius: 50%;
+    background: radial-gradient(circle at 38% 32%, var(--parch-hi), var(--parch) 70%);
+    border: 1mm solid var(--banner);
+    box-shadow: 0 0 0 0.6mm var(--accent), 0 1mm 2mm rgba(0,0,0,0.3);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .medallion img { width: 62%; }
+  .charname { position: absolute; top: 26.5mm; left: 8mm; width: 29mm; text-align: center; font-family: "Alegreya SC", serif; font-size: 7.5pt; letter-spacing: 0.14em; color: var(--ink-soft); }
+
+  /* ── content grid ───────────────────────────── */
+  main {
+    position: absolute; top: 30mm; left: 11mm; right: 11mm; bottom: 15mm;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4mm;
+  }
+  main .col { display: flex; flex-direction: column; gap: 4mm; min-width: 0; justify-content: flex-start; }
+
+  section.card {
+    background: var(--parch-panel);
+    border: 0.5mm solid rgba(36, 27, 16, 0.55);
+    border-radius: 2.5mm;
+    padding: 5mm 4.5mm 3.8mm;
+    position: relative;
+    box-shadow: 0 0.5mm 1.2mm rgba(60,45,20,0.25);
+  }
+  .card-banner {
+    position: absolute; top: -3.4mm; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(180deg, var(--banner-hi), var(--banner));
+    color: var(--parch-hi);
+    font-family: "Pirata One", serif; font-size: 14pt; letter-spacing: 0.05em;
+    padding: 0.9mm 8mm 0.7mm;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 3.5mm) 50%, 100% 100%, 0 100%, 3.5mm 50%);
+    white-space: nowrap;
+    box-shadow: 0 0.6mm 1.2mm rgba(0,0,0,0.3);
+  }
+  .card-banner::after { content: ""; position: absolute; left: 10%; right: 10%; bottom: 0.5mm; height: 0.35mm; background: var(--accent-lite); opacity: 0.9; }
+  section.card > :nth-child(2) { margin-top: 1.6mm; }
+
+  /* ── typography ─────────────────────────────── */
+  p, li { font-size: 9.8pt; line-height: 1.38; }
+  strong { color: #000; }
+  em { color: var(--ink-soft); }
+
+  ol.steps { list-style: none; counter-reset: step; }
+  ol.steps > li { counter-increment: step; position: relative; padding-left: 8mm; margin-bottom: 2.4mm; }
+  ol.steps > li:last-child { margin-bottom: 0; }
+  ol.steps > li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 0.1mm;
+    width: 5.8mm; height: 6.6mm;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Pirata One", serif; font-size: 11pt; color: var(--parch-hi);
+    background: var(--accent);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  ul.dash { list-style: none; }
+  ul.dash > li { position: relative; padding-left: 5mm; margin-bottom: 1.9mm; }
+  ul.dash > li:last-child { margin-bottom: 0; }
+  ul.dash > li::before { content: "◆"; position: absolute; left: 0.4mm; top: 0; font-size: 6.5pt; color: var(--accent); }
+  ul.dash li .lead { font-family: "Alegreya SC", serif; font-weight: 700; letter-spacing: 0.02em; }
+
+  .flag { display: inline-flex; align-items: center; justify-content: center; width: 3.6mm; height: 3.6mm; background: var(--accent); transform: rotate(45deg); margin: 0 1mm -0.5mm 0; }
+  .flag span { transform: rotate(-45deg); color: var(--parch-hi); font-weight: 800; font-size: 6.5pt; font-family: "Alegreya", serif; }
+
+  .warnbox { background: color-mix(in srgb, var(--accent) 14%, transparent); border-left: 1.2mm solid var(--accent); padding: 2mm 2.5mm; border-radius: 0 1.5mm 1.5mm 0; margin-top: 1.8mm; }
+  .warnbox li { margin-bottom: 1mm; }
+  .warnbox li:last-child { margin-bottom: 0; }
+
+  table.chart { width: 100%; border-collapse: collapse; margin-top: 1.5mm; }
+  table.chart th, table.chart td { font-size: 8.8pt; text-align: center; padding: 1.1mm 0.5mm; border: 0.3mm solid rgba(36,27,16,0.4); }
+  table.chart th.rowh, table.chart td.rowh { text-align: left; padding-left: 1.5mm; font-family: "Alegreya SC", serif; font-size: 8pt; }
+  table.chart thead th { background: var(--banner); color: var(--parch-hi); font-family: "Alegreya SC", serif; }
+  table.chart tbody tr:nth-child(even) td { background: rgba(226, 213, 176, 0.6); }
+
+  footer {
+    position: absolute; bottom: 8.5mm; left: 11mm; right: 11mm;
+    display: flex; align-items: center; gap: 3mm;
+    font-family: "Alegreya SC", serif; font-size: 7pt; letter-spacing: 0.2em; color: var(--ink-soft);
+    justify-content: center;
+  }
+  footer .rule { flex: 1; height: 0.3mm; background: linear-gradient(90deg, transparent, var(--ink-soft)); }
+  footer .rule:last-child { background: linear-gradient(90deg, var(--ink-soft), transparent); }
+
+  /* ── density modifier for heavier sheets ── */
+  .tight main { top: 29mm; }
+  .tight p, .tight li { font-size: 9.1pt; line-height: 1.3; }
+  .tight .col { gap: 3.2mm; }
+  .tight section.card { padding: 4.4mm 4mm 3mm; }
+  .tight ol.steps > li { margin-bottom: 1.7mm; }
+  .tight ul.dash > li { margin-bottom: 1.35mm; }
+  .tight .card-banner { font-size: 13pt; }
+
+  /* ── density modifier for lighter sheets ── */
+  .loose p, .loose li { font-size: 10.8pt; line-height: 1.58; }
+  .loose .col { gap: 5.5mm; }
+  .loose section.card { padding: 6mm 5.2mm 5mm; }
+  .loose ol.steps > li { margin-bottom: 4mm; }
+  .loose ul.dash > li { margin-bottom: 3.4mm; }
+  .loose .card-banner { font-size: 15pt; }
+
+  /* ── airy spacing (fills a page without shrinking type) ── */
+  .airy .col { gap: 5.6mm; }
+  .airy p, .airy li { line-height: 1.5; }
+  .airy ul.dash > li { margin-bottom: 2.7mm; }
+  .airy ol.steps > li { margin-bottom: 3.4mm; }
+  .airy section.card { padding: 5.6mm 4.6mm 4.4mm; }
+
+  /* character accents */
+  .hatchet      { --accent: #2e6079; --accent-lite: #9cc4d6; }
+  .redguard     { --accent: #8f2427; --accent-lite: #dfa08f; }
+  .voidwarden   { --accent: #5c5e75; --accent-lite: #c3c4d6; }
+  .demolitionist{ --accent: #a8651a; --accent-lite: #e5c184; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════ SHEET I · SCENARIO SETUP · HATCHET ════════════════ -->
+<div class="page hatchet">
+  <div class="watermark"><img src="../assets/logos/svg/hatchet-logo.svg" alt=""></div>
+  <div class="frame"></div>
+  <header><div class="banner"><h1>Scenario Setup</h1><div class="sub">BEFORE THE FIRST CARD IS PLAYED</div></div></header>
+  <div class="medallion"><img src="../assets/logos/svg/hatchet-logo.svg" alt=""></div>
+  <div class="charname">HATCHET</div>
+
+  <main>
+    <div class="col">
+      <section class="card">
+        <div class="card-banner">Setup Checklist</div>
+        <ol class="steps">
+          <li><strong>Read the intro</strong> in the scenario book — and the <strong>Special Rules box</strong> <em>now</em>. It often changes setup: spawns, round counting, allies.</li>
+          <li><strong>Set scenario level</strong>: average party level ÷ 2, <strong>rounded up</strong>. Easy −1 · Normal +0 · Hard +1 · Very&nbsp;Hard +2.</li>
+          <li><span class="flag"><span>!</span></span><strong>Build the first map section ONLY.</strong> Anything drawn in a later section — monsters included — is <em>not placed now</em>. It enters when that section is revealed.</li>
+          <li><strong>Place monsters for YOUR player count</strong> — only standees whose 2/3/4-player icon matches. Gold-ringed hex = elite. Slide each stat card to the <strong>scenario level</strong>.</li>
+          <li><strong>Monster ability decks</strong>: one shuffled deck per monster <em>type</em> in the scenario — including types arriving later.</li>
+          <li><span class="flag"><span>!</span></span><strong>Battle goals</strong>: deal 2 to each player. Secretly keep 1, discard the other.</li>
+          <li><strong>Attack modifier decks</strong>: your 20 base cards <strong>+ your perk changes</strong>, plus the monster deck. Strip out stale bless/curse from last session. Shuffle all.</li>
+          <li><strong>Elements board</strong>: all six markers to <strong>Inert</strong>. Round tracker to 1 if the scenario counts rounds.</li>
+          <li><strong>Characters</strong>: HP dial to max · pick your hand <em>after</em> reading the scenario · items readied &amp; unflipped.</li>
+          <li><strong>Place figures</strong> on the starting hexes — then draw the first cards.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Choosing Your Hand</div>
+        <ul class="dash">
+          <li>Hand picked <strong>after</strong> reading the scenario — tune for objective, room count and monster types.</li>
+          <li>Long scenario? Ration <strong>Lost</strong> cards — each one burnt is a shorter fuse on exhaustion.</li>
+          <li>Items may be swapped freely before the scenario, never during.</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="card">
+        <div class="card-banner">Opening a Door</div>
+        <ul class="dash">
+          <li>Reveal the section; place overlays and its monsters — <strong>your player count only</strong>, again.</li>
+          <li>If that type has <strong>no ability card flipped yet this round</strong>, flip one now. Revealed monsters <strong>always act this round</strong>.</li>
+          <li><span class="flag"><span>!</span></span>Initiative <strong>lower</strong> than the opener (already passed)? They act <strong>immediately after that character's turn</strong>. Otherwise at their normal slot.</li>
+          <li>Opening the door is part of the move — finish any remaining movement after.</li>
+          <li>Doors stay open. Revealed stays revealed.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Quick Numbers</div>
+        <table class="chart">
+          <thead><tr><th class="rowh">Scenario lvl</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead>
+          <tbody>
+            <tr><td class="rowh">Monster lvl</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
+            <tr><td class="rowh">Trap damage</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr>
+            <tr><td class="rowh">Gold / coin</td><td>1</td><td>1</td><td>2</td><td>2</td><td>3</td><td>3</td><td>4</td><td>4</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Traps We Fall Into</div>
+        <div class="warnbox">
+          <ul class="dash">
+            <li>Battle goal cards never dealt.</li>
+            <li>Whole map populated at setup — monster flood.</li>
+            <li>Perk cards missing from the modifier deck.</li>
+            <li>Stat sleeves still on last scenario's level.</li>
+            <li>Special-rules box discovered at round six.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Oft Forgot</div>
+        <ul class="dash">
+          <li>You may forego any attack, push or pull — but a used push/pull goes to full effect.</li>
+          <li>Summons don't act the round they arrive, and never drop loot.</li>
+          <li>Your deck is your clock — burn Lost cards early, exhaust early.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer><div class="rule"></div><span>JAWS OF THE LION · QUICK REFERENCE · I</span><div class="rule"></div></footer>
+  <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+</div>
+
+<!-- ════════════════ SHEET II · THE ROUND · RED GUARD ════════════════ -->
+<div class="page redguard airy">
+  <div class="watermark"><img src="../assets/logos/svg/red-guard-logo.svg" alt=""></div>
+  <div class="frame"></div>
+  <header><div class="banner"><h1>The Round</h1><div class="sub">KEEP THE WHEEL TURNING</div></div></header>
+  <div class="medallion"><img src="../assets/logos/svg/red-guard-logo.svg" alt=""></div>
+  <div class="charname">RED GUARD</div>
+
+  <main>
+    <div class="col">
+      <section class="card">
+        <div class="card-banner">Round Sequence</div>
+        <ol class="steps">
+          <li><strong>SELECT</strong> — everyone secretly picks 2 cards, or declares <strong>Long Rest</strong> (needs ≥2 cards in discard). Can do neither → <strong>exhausted</strong>.</li>
+          <li><strong>REVEAL</strong> — flip one ability card per monster type on the map.</li>
+          <li><strong>INITIATIVE</strong> — your leading card sets your number; monsters use their card. Lowest first. <strong>Char/monster tie → character</strong>; char/char tie → second cards.</li>
+          <li><strong>TURNS</strong> — <strong>top of one card + bottom of the other</strong>, either order. Either half may become the default <strong>Attack 2 (top)</strong> or <strong>Move 2 (bottom)</strong> — still counts as playing it.</li>
+          <li><strong>END OF ROUND</strong> — see the box below.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">End of Round</div>
+        <ul class="dash">
+          <li><span class="flag"><span>!</span></span><strong>Elements wane one step</strong>: Strong → Waning → Inert.</li>
+          <li><span class="flag"><span>!</span></span><strong>Reshuffle any modifier deck that drew a null (∅) or ×2</strong> this round. <strong>Bless &amp; Curse do NOT</strong> trigger a reshuffle — they're <em>removed from the deck</em> when drawn.</li>
+          <li>Reshuffle a <strong>monster</strong> ability deck if its shuffle-icon card came up.</li>
+          <li><strong>Short rest</strong> (optional, once): shuffle discard, lose 1 at random, rest back. May pay 1 HP to re-roll the loss, once.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Conditions</div>
+        <ul class="dash">
+          <li><strong>Stun · Immobilize · Disarm · Muddle · Strengthen · Invisible</strong>: last until the <strong>end of the target's NEXT turn</strong> — not end of round.</li>
+          <li><strong>Poison</strong>: +1 damage from every attack; <strong>any heal removes it</strong> instead of healing.</li>
+          <li><strong>Wound</strong>: 1 damage at turn start; any heal removes it (heal still applies).</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="card">
+        <div class="card-banner">Monster Turns</div>
+        <ul class="dash">
+          <li><span class="flag"><span>!</span></span><strong>Focus</strong> = the character reachable by the <strong>shortest path</strong> (not straight-line). Monsters route <em>around</em> obstacles and treat <strong>traps as obstacles</strong> — the nearest-looking hero isn't always the target. No line-of-sight needed.</li>
+          <li>Same number of hexes → focus the one <strong>earlier in initiative</strong>.</li>
+          <li>Within a type: <strong>elites act first</strong>, then normals, ascending standee number.</li>
+          <li>The ability card is the whole turn — no attack listed, no attack.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Elements</div>
+        <ul class="dash">
+          <li>An element you <strong>create</strong> is usable only at the <strong>end of that turn</strong> — never fuel your own combo the same turn.</li>
+          <li><strong>Consuming</strong> drops it to Inert at once; only one figure gets it.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Taking Damage</div>
+        <ul class="dash">
+          <li>You may ALWAYS instead lose <strong>1 card from hand or 2 from discard</strong> to negate ALL damage from one source.</li>
+          <li><strong>Long rest</strong> (init 99, whole turn): recover discards (lose 1 of choice), <strong>heal 2, refresh all spent items</strong>.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Moving Around</div>
+        <ul class="dash">
+          <li><strong>Difficult terrain</strong>: costs <strong>2 movement</strong> to enter each hex.</li>
+          <li><span class="flag"><span>!</span></span><strong>Jump</strong>: ignores figures, difficult terrain, traps &amp; hazards <em>crossed</em> — only the <strong>landing hex</strong> must be legal &amp; empty.</li>
+          <li><strong>Fly</strong>: like Jump, but also ignores obstacles crossed en route.</li>
+          <li>Move <strong>through allies</strong> freely, never enemies; never <strong>end</strong> on another figure.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer><div class="rule"></div><span>JAWS OF THE LION · QUICK REFERENCE · II</span><div class="rule"></div></footer>
+  <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+</div>
+
+<!-- ════════════════ SHEET III · THE RECKONING · VOIDWARDEN ════════════════ -->
+<div class="page voidwarden">
+  <div class="watermark"><img src="../assets/logos/svg/voidwarden-logo.svg" alt=""></div>
+  <div class="frame"></div>
+  <header><div class="banner"><h1>The Reckoning</h1><div class="sub">SCENARIO END &amp; SPOILS</div></div></header>
+  <div class="medallion"><img src="../assets/logos/svg/voidwarden-logo.svg" alt=""></div>
+  <div class="charname">VOIDWARDEN</div>
+
+  <main>
+    <div class="col">
+      <section class="card">
+        <div class="card-banner">When Does It End?</div>
+        <ul class="dash">
+          <li><span class="flag"><span>!</span></span>Goal met → the scenario ends at the <strong>end of that round</strong> — keep playing it out: loot, finish battle-goal business.</li>
+          <li><strong>Loss</strong> = everyone exhausted, or the goal becomes impossible.</li>
+          <li>Coins left on the floor <strong>vanish</strong> — nobody banks them.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Everyone — Win or Lose</div>
+        <ul class="dash">
+          <li>Bank the <strong>XP tracked on your dial/cards</strong> during the scenario.</li>
+          <li>Convert <strong>looted coin tokens</strong> to gold at the scenario-level rate (see table). Exhausted characters keep what they gathered before dropping.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">On Victory</div>
+        <ul class="dash">
+          <li><span class="flag"><span>!</span></span><strong>Bonus XP = 4 + (2 × scenario level)</strong> each — <strong>including exhausted characters</strong>. (Level 1 = 6.)</li>
+          <li>Reveal <strong>battle goals</strong>: fulfilled → mark the ✓ shown (1 or 2). <strong>Every 3rd ✓ = 1 perk</strong> (max 18 ✓).</li>
+          <li>Tick the scenario complete; read the conclusion; apply unlocks &amp; rewards; note the next scenario(s).</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="card">
+        <div class="card-banner">Scenario-Level Table</div>
+        <table class="chart">
+          <thead><tr><th class="rowh">Scenario lvl</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead>
+          <tbody>
+            <tr><td class="rowh">Monster lvl</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
+            <tr><td class="rowh">Gold / coin</td><td>1</td><td>1</td><td>2</td><td>2</td><td>3</td><td>3</td><td>4</td><td>4</td></tr>
+            <tr><td class="rowh">Trap damage</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr>
+            <tr><td class="rowh">Bonus XP</td><td>4</td><td>6</td><td>8</td><td>10</td><td>12</td><td>14</td><td>16</td><td>18</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Back in Town</div>
+        <ul class="dash">
+          <li>Refresh &amp; unflip <strong>all items</strong>; clear conditions; reset HP; all cards return to hand.</li>
+          <li>Shop: buy at cost, <strong>sell at half</strong> (round down).</li>
+          <li>Level up if XP allows (see Sheet IV).</li>
+          <li><strong>Encounter one city event</strong> after every successful scenario (Scenario 3 on): draw, pick one of two options together, file it away.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">On Failure</div>
+        <ul class="dash">
+          <li><strong>Money tokens, XP &amp; treasure loot</strong> earned before failure carry into the retry. Everything else resets. (Treasure loots once, ever.)</li>
+          <li>No completion bonus. <span class="flag"><span>!</span></span><strong>Battle goals score NOTHING on a loss</strong> — the ✓ only lands on a completed scenario. Card is discarded either way; draw fresh next time.</li>
+          <li>Set the scenario up again and replay at no penalty.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer><div class="rule"></div><span>JAWS OF THE LION · QUICK REFERENCE · III</span><div class="rule"></div></footer>
+  <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+</div>
+
+<!-- ════════════════ SHEET IV · LEVELLING UP · DEMOLITIONIST ════════════════ -->
+<div class="page demolitionist loose">
+  <div class="watermark"><img src="../assets/logos/svg/demolitionist-logo.svg" alt=""></div>
+  <div class="frame"></div>
+  <header><div class="banner"><h1>Levelling Up</h1><div class="sub">BACK AT THE TABLE</div></div></header>
+  <div class="medallion"><img src="../assets/logos/svg/demolitionist-logo.svg" alt=""></div>
+  <div class="charname">DEMOLITIONIST</div>
+
+  <main>
+    <div class="col">
+      <section class="card">
+        <div class="card-banner">Level-Up Steps</div>
+        <ol class="steps">
+          <li><strong>Tick the new level</strong> on your character sheet. You never lose XP.</li>
+          <li><span class="flag"><span>!</span></span><strong>Add ONE new ability card</strong> to your pool: any card of your <strong>new level or lower</strong> you don't own. Just one — not both of the level's cards.</li>
+          <li><span class="flag"><span>!</span></span><strong>Hand size never changes.</strong> Bigger pool, same hand.</li>
+          <li><strong>Raise max HP</strong> to the white number below the new level on your character mat.</li>
+          <li><span class="flag"><span>!</span></span><strong>Gain 1 perk</strong> — apply it to the modifier deck NOW (add/remove the physical cards) or it never happens.</li>
+          <li>Recount the <strong>party scenario level</strong> (avg level ÷ 2, round up) — monsters may level with you.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">XP Thresholds</div>
+        <table class="chart">
+          <thead><tr><th class="rowh">Level</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr></thead>
+          <tbody>
+            <tr><td class="rowh">Total XP</td><td>45</td><td>95</td><td>150</td><td>210</td><td>275</td><td>345</td><td>420</td><td>500</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Scenario Difficulty</div>
+        <ul class="dash">
+          <li><strong>Normal</strong> = party level ÷ 2, round up. <strong>Easy</strong> −1 · <strong>Hard</strong> +1 · <strong>Very&nbsp;Hard</strong> +2.</li>
+          <li>Only raise the scenario (monster) level once someone reaches <strong>level 3</strong>.</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="card">
+        <div class="card-banner">Perks &amp; Battle Goals</div>
+        <ul class="dash">
+          <li>Perks are the ONLY way to improve your modifier deck — remove the base cards you're told to and add the perk cards.</li>
+          <li><strong>Every 3rd battle-goal ✓ = 1 extra perk</strong> (max 18 ✓ = 6 perks). Apply it the same way, right away.</li>
+          <li>Perks that "remove" cards: pull them and store them — mind overlaps if two perks touch the same card.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Milestones</div>
+        <ul class="dash">
+          <li><strong>Level 3</strong>: scenario level ticks up, and you may carry <strong>small items = half your level, rounded up</strong>.</li>
+          <li><strong>Level 5</strong>: open your second ability pack — higher-level cards plus special instructions.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Worth Remembering</div>
+        <ul class="dash">
+          <li>Levelling grants <strong>no</strong> new gold, items or hand cards — only the card, HP and perk above.</li>
+          <li>JOTL has <strong>no personal quests or retirement</strong> — you keep your mercenary the whole campaign.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer><div class="rule"></div><span>JAWS OF THE LION · QUICK REFERENCE · IV</span><div class="rule"></div></footer>
+  <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+</div>
+
+</body>
+</html>

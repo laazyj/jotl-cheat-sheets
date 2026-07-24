@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JOTL Cheat Sheets — Variation 1 · Card Frame</title>
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root {
+    --ink: #241b10;
+    --ink-soft: #3a2e1e;
+    --parch: #d3c39b;
+    --parch-hi: #e2d5b0;
+    --parch-panel: rgba(238, 228, 197, 0.55);
+    --banner: #221a11;
+    --banner-hi: #35291a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #4a4238; }
+  body { font-family: "Alegreya", serif; color: var(--ink); }
+
+  @page { size: A4; margin: 0; }
+  .page {
+    width: 210mm; height: 297mm;
+    position: relative; overflow: hidden;
+    background-color: var(--parch);
+    background-image:
+      /* fine dark speckle */
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.14 0 0 0 0 0.10 0 0 0 0 0.05 0 0 0 0.9 -0.62'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23s)'/%3E%3C/svg%3E"),
+      /* soft sepia mottle */
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.011' numOctaves='3' stitchTiles='stitch' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.27 0 0 0 0 0.14 0 0 0 0.34 -0.07'/%3E%3C/filter%3E%3Crect width='640' height='640' filter='url(%23m)'/%3E%3C/svg%3E"),
+      radial-gradient(ellipse 120% 90% at 50% 40%, rgba(246,238,212,0.65), rgba(190,172,128,0.35) 78%, rgba(150,131,90,0.5) 100%);
+  }
+  @media screen {
+    body { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 20px 0; }
+    .page { box-shadow: 0 6px 30px rgba(0,0,0,0.5); }
+  }
+  @media print { .page { page-break-after: always; } }
+
+  /* ── card frame ─────────────────────────────── */
+  .frame {
+    position: absolute; inset: 6mm;
+    border: 1.4mm solid var(--ink);
+    border-radius: 5mm;
+    box-shadow: inset 0 0 0 0.4mm var(--parch-hi), inset 0 0 0 0.9mm var(--accent);
+    pointer-events: none;
+  }
+  .corner { position: absolute; width: 8mm; height: 8mm; border: 1.4mm solid var(--ink); }
+  .corner.tl { top: 4mm; left: 4mm; border-right: 0; border-bottom: 0; border-top-left-radius: 3mm; }
+  .corner.tr { top: 4mm; right: 4mm; border-left: 0; border-bottom: 0; border-top-right-radius: 3mm; }
+  .corner.bl { bottom: 4mm; left: 4mm; border-right: 0; border-top: 0; border-bottom-left-radius: 3mm; }
+  .corner.br { bottom: 4mm; right: 4mm; border-left: 0; border-top: 0; border-bottom-right-radius: 3mm; }
+
+  .watermark {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  }
+  .watermark img { width: 58%; opacity: 0.06; }
+
+  /* ── header banner ──────────────────────────── */
+  header { position: absolute; top: 9mm; left: 0; right: 0; display: flex; justify-content: center; }
+  .banner {
+    position: relative;
+    background: linear-gradient(180deg, var(--banner-hi), var(--banner));
+    color: var(--parch-hi);
+    padding: 2.6mm 14mm 2.2mm;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 6mm) 50%, 100% 100%, 0 100%, 6mm 50%);
+    text-align: center;
+    box-shadow: 0 1mm 2mm rgba(0,0,0,0.35);
+  }
+  .banner h1 { font-family: "Pirata One", serif; font-weight: 400; font-size: 25pt; letter-spacing: 0.06em; line-height: 1; }
+  .banner .sub { font-family: "Alegreya SC", serif; font-size: 8pt; letter-spacing: 0.28em; color: var(--accent-lite); margin-top: 0.8mm; }
+  .medallion {
+    position: absolute; top: 8mm; left: 14mm;
+    width: 17mm; height: 17mm; border-radius: 50%;
+    background: radial-gradient(circle at 38% 32%, var(--parch-hi), var(--parch) 70%);
+    border: 1mm solid var(--banner);
+    box-shadow: 0 0 0 0.6mm var(--accent), 0 1mm 2mm rgba(0,0,0,0.3);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .medallion img { width: 62%; }
+  .charname {
+    position: absolute; top: 26.5mm; left: 8mm; width: 29mm;
+    text-align: center; font-family: "Alegreya SC", serif; font-size: 7.5pt; letter-spacing: 0.14em; color: var(--ink-soft);
+  }
+
+  /* ── content grid ───────────────────────────── */
+  main {
+    position: absolute; top: 30mm; left: 11mm; right: 11mm; bottom: 15mm;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4mm;
+  }
+  main .col { display: flex; flex-direction: column; gap: 4mm; min-width: 0; justify-content: space-between; }
+
+  section.card {
+    background: var(--parch-panel);
+    border: 0.5mm solid rgba(36, 27, 16, 0.55);
+    border-radius: 2.5mm;
+    padding: 5mm 4.5mm 3.8mm;
+    position: relative;
+    box-shadow: 0 0.5mm 1.2mm rgba(60,45,20,0.25);
+  }
+  .card-banner {
+    position: absolute; top: -3.4mm; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(180deg, var(--banner-hi), var(--banner));
+    color: var(--parch-hi);
+    font-family: "Pirata One", serif; font-size: 14pt; letter-spacing: 0.05em;
+    padding: 0.9mm 8mm 0.7mm;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 3.5mm) 50%, 100% 100%, 0 100%, 3.5mm 50%);
+    white-space: nowrap;
+    box-shadow: 0 0.6mm 1.2mm rgba(0,0,0,0.3);
+  }
+  .card-banner::after { content: ""; position: absolute; left: 10%; right: 10%; bottom: 0.5mm; height: 0.35mm; background: var(--accent-lite); opacity: 0.9; }
+  section.card > :nth-child(2) { margin-top: 1.6mm; }
+
+  /* ── typography ─────────────────────────────── */
+  p, li { font-size: 9.8pt; line-height: 1.38; }
+  strong { color: #000; }
+  em { color: var(--ink-soft); }
+
+  ol.steps { list-style: none; counter-reset: step; }
+  ol.steps > li { counter-increment: step; position: relative; padding-left: 8mm; margin-bottom: 2.4mm; }
+  ol.steps > li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 0.1mm;
+    width: 5.8mm; height: 6.6mm;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Pirata One", serif; font-size: 11pt; color: var(--parch-hi);
+    background: var(--accent);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  ul.dash { list-style: none; }
+  ul.dash > li { position: relative; padding-left: 5mm; margin-bottom: 1.9mm; }
+  ul.dash > li::before { content: "◆"; position: absolute; left: 0.4mm; top: 0; font-size: 6.5pt; color: var(--accent); }
+
+  .flag { display: inline-flex; align-items: center; justify-content: center; width: 3.6mm; height: 3.6mm; background: var(--accent); transform: rotate(45deg); margin: 0 1mm -0.5mm 0; }
+  .flag span { transform: rotate(-45deg); color: var(--parch-hi); font-weight: 800; font-size: 6.5pt; font-family: "Alegreya", serif; }
+
+  .warnbox {
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    border-left: 1.2mm solid var(--accent);
+    padding: 2mm 2.5mm; border-radius: 0 1.5mm 1.5mm 0; margin-top: 1.8mm;
+  }
+  .warnbox li { margin-bottom: 1mm; }
+
+  table.chart { width: 100%; border-collapse: collapse; margin-top: 1.5mm; }
+  table.chart th, table.chart td {
+    font-size: 8.8pt; text-align: center; padding: 1.1mm 0.5mm;
+    border: 0.3mm solid rgba(36,27,16,0.4);
+  }
+  table.chart th.rowh, table.chart td.rowh { text-align: left; padding-left: 1.5mm; font-family: "Alegreya SC", serif; font-size: 8.2pt; }
+  table.chart thead th { background: var(--banner); color: var(--parch-hi); font-family: "Alegreya SC", serif; }
+  table.chart tbody tr:nth-child(even) td { background: rgba(226, 213, 176, 0.6); }
+
+  footer {
+    position: absolute; bottom: 8.5mm; left: 11mm; right: 11mm;
+    display: flex; align-items: center; gap: 3mm;
+    font-family: "Alegreya SC", serif; font-size: 7pt; letter-spacing: 0.2em; color: var(--ink-soft);
+    justify-content: center;
+  }
+  footer .rule { flex: 1; height: 0.3mm; background: linear-gradient(90deg, transparent, var(--ink-soft)); }
+  footer .rule:last-child { background: linear-gradient(90deg, var(--ink-soft), transparent); }
+
+  /* ── ghost placeholders for background-layout pages ── */
+  .ghost { opacity: 0.5; }
+  .ghost .card-banner { background: linear-gradient(180deg, #5a4c37, #463a29); }
+  .ghostlines { display: flex; flex-direction: column; gap: 1.8mm; margin-top: 2mm; }
+  .ghostlines i { display: block; height: 1.6mm; border-radius: 1mm; background: rgba(58, 46, 30, 0.22); }
+  .ghostlines i:nth-child(2n) { width: 92%; } .ghostlines i:nth-child(3n) { width: 84%; }
+
+  /* character accents */
+  .hatchet      { --accent: #2e6079; --accent-lite: #9cc4d6; }
+  .redguard     { --accent: #8f2427; --accent-lite: #dfa08f; }
+  .voidwarden   { --accent: #5c5e75; --accent-lite: #c3c4d6; }
+  .demolitionist{ --accent: #a8651a; --accent-lite: #e5c184; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ GOLDEN SHEET · Scenario Setup (Hatchet) ═══════════ -->
+<div class="page hatchet">
+  <div class="watermark"><img src="../../assets/logos/svg/hatchet-logo.svg" alt=""></div>
+  <div class="frame"></div>
+  <header>
+    <div class="banner">
+      <h1>Scenario Setup</h1>
+      <div class="sub">BEFORE THE FIRST CARD IS PLAYED</div>
+    </div>
+  </header>
+  <div class="medallion"><img src="../../assets/logos/svg/hatchet-logo.svg" alt=""></div>
+  <div class="charname">HATCHET</div>
+
+  <main>
+    <div class="col">
+      <section class="card">
+        <div class="card-banner">Setup Checklist</div>
+        <ol class="steps">
+          <li><strong>Read the intro</strong> in the scenario book — and the <strong>Special Rules box</strong> <em>now</em>. It often changes setup: spawns, round counting, allies.</li>
+          <li><strong>Set scenario level</strong>: average party level ÷ 2, <strong>rounded up</strong>. Easy −1 · Normal +0 · Hard +1 · Very&nbsp;Hard +2.</li>
+          <li><span class="flag"><span>!</span></span><strong>Build the first map section ONLY.</strong> Anything drawn in a later section — monsters included — is <em>not placed now</em>. It enters when that section is revealed.</li>
+          <li><strong>Place monsters for YOUR player count</strong> — only standees whose 2/3/4-player icon matches. Gold-ringed hex = elite. Slide each stat card to the <strong>scenario level</strong>.</li>
+          <li><strong>Monster ability decks</strong>: one shuffled deck per monster <em>type</em> in the scenario — including types arriving later.</li>
+          <li><span class="flag"><span>!</span></span><strong>Battle goals</strong>: deal 2 to each player. Secretly keep 1, discard the other.</li>
+          <li><strong>Attack modifier decks</strong>: your 20 base cards <strong>+ your perk changes</strong>, plus the monster deck. Strip out stale bless/curse from last session. Shuffle all.</li>
+          <li><strong>Elements board</strong>: all six markers to <strong>Inert</strong>. Round tracker to 1 if the scenario counts rounds.</li>
+          <li><strong>Characters</strong>: HP dial to max · pick your hand <em>after</em> reading the scenario · items readied &amp; unflipped.</li>
+          <li><strong>Place figures</strong> on the starting hexes — then draw the first cards.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Choosing Your Hand</div>
+        <ul class="dash">
+          <li>Hand picked <strong>after</strong> reading the scenario — tune for objective, room count and monster types.</li>
+          <li>Long scenario? Ration <strong>Lost</strong> cards — each one burnt is a shorter fuse on exhaustion.</li>
+          <li>Items may be swapped freely before the scenario, never during.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Advantage &amp; Disadvantage</div>
+        <ul class="dash">
+          <li><strong>Advantage</strong>: draw 2 modifiers, apply the better.</li>
+          <li><strong>Disadvantage</strong>: draw 2, apply the worse — rolling modifiers are ignored entirely.</li>
+          <li>Ranged attack on an adjacent enemy = disadvantage.</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="card">
+        <div class="card-banner">Opening a Door</div>
+        <ul class="dash">
+          <li>Reveal the section; place overlays and its monsters — <strong>your player count only</strong>, again.</li>
+          <li>New monster types <strong>draw an ability card immediately</strong>. They act <em>this round</em> at that initiative — if it already passed, they stand idle.</li>
+          <li>Doors stay open. Revealed stays revealed.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Quick Numbers</div>
+        <table class="chart">
+          <thead><tr><th class="rowh">Scenario lvl</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead>
+          <tbody>
+            <tr><td class="rowh">Monster lvl</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
+            <tr><td class="rowh">Trap damage</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Traps We Fall Into</div>
+        <div class="warnbox">
+          <ul class="dash">
+            <li>Battle goal cards never dealt.</li>
+            <li>Whole map populated at setup — monster flood.</li>
+            <li>Perk cards missing from the modifier deck.</li>
+            <li>Stat sleeves still on last scenario's level.</li>
+            <li>Special-rules box discovered at round six.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Oft Forgot</div>
+        <ul class="dash">
+          <li>You may forego any attack, push or pull — but a used push/pull goes to full effect.</li>
+          <li>Summons don't act the round they arrive, and never drop loot.</li>
+          <li>Your deck is your clock — burn Lost cards early, exhaust early.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card-banner">Movement &amp; Sight</div>
+        <ul class="dash">
+          <li>Difficult terrain: 2 movement per hex. Jump &amp; Fly ignore it.</li>
+          <li>Jump/Fly ignore everything crossed — only the landing hex triggers.</li>
+          <li>Line of sight is corner-to-corner; walls and closed doors block it.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer><div class="rule"></div><span>JAWS OF THE LION · QUICK REFERENCE · I</span><div class="rule"></div></footer>
+  <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+</div>
+
+<!-- ═══════════ BACKGROUND LAYOUTS · 4 characters ═══════════ -->
+<script>
+const CHARS = [
+  { cls: "hatchet",       name: "HATCHET",       logo: "../../assets/logos/svg/hatchet-logo.svg",       title: "Scenario Setup", sub: "BEFORE THE FIRST CARD IS PLAYED", num: "I" },
+  { cls: "redguard",      name: "RED GUARD",     logo: "../../assets/logos/svg/red-guard-logo.svg",     title: "The Round",      sub: "KEEP THE WHEEL TURNING",          num: "II" },
+  { cls: "voidwarden",    name: "VOIDWARDEN",    logo: "../../assets/logos/svg/voidwarden-logo.svg",    title: "The Reckoning", sub: "SCENARIO END & SPOILS",        num: "III" },
+  { cls: "demolitionist", name: "DEMOLITIONIST", logo: "../../assets/logos/svg/demolitionist-logo.svg", title: "Levelling Up",   sub: "BACK AT THE TABLE",               num: "IV" },
+];
+const ghostSection = (title, lines) => `
+  <section class="card ghost">
+    <div class="card-banner">${title}</div>
+    <div class="ghostlines">${'<i></i>'.repeat(lines)}</div>
+  </section>`;
+for (const c of CHARS) {
+  const el = document.createElement("div");
+  el.className = "page " + c.cls;
+  el.innerHTML = `
+    <div class="watermark"><img src="${c.logo}" alt=""></div>
+    <div class="frame"></div>
+    <header><div class="banner"><h1>${c.title}</h1><div class="sub">${c.sub}</div></div></header>
+    <div class="medallion"><img src="${c.logo}" alt=""></div>
+    <div class="charname">${c.name}</div>
+    <main>
+      <div class="col">${ghostSection("Section One", 22)}${ghostSection("Section Two", 14)}</div>
+      <div class="col">${ghostSection("Section Three", 10)}${ghostSection("Section Four", 14)}${ghostSection("Section Five", 8)}</div>
+    </main>
+    <footer><div class="rule"></div><span>JAWS OF THE LION · QUICK REFERENCE · ${c.num}</span><div class="rule"></div></footer>
+    <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>`;
+  document.body.appendChild(el);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Claude Code workspace
+.claude/
+
+# Local build output (regenerate with ./build.sh) — released copies live in dist/
+build/
+
+# macOS / editor cruft
+.DS_Store
+*.swp
+*~
