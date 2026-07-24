@@ -75,10 +75,23 @@ Every rule was verified against the official *Gloomhaven: Jaws of the Lion*
 rulebook. `content/CONTENT.md` is the canonical text; the sheets are a typeset
 subset of it.
 
-## Fonts & licensing
+## Contributing
 
-[Pirata One](https://fonts.google.com/specimen/Pirata+One) and
-[Alegreya](https://fonts.google.com/specimen/Alegreya) are Google Fonts under
-the SIL Open Font License, self-hosted in `assets/fonts/`. *Gloomhaven: Jaws of
-the Lion* is © Cephalofair Games; these sheets are an unofficial fan-made
-reference for personal use.
+This is a personal project and **contributions are not accepted** — see
+[`CONTRIBUTING.md`](CONTRIBUTING.md). You're welcome to read and print the
+sheets for your own games.
+
+## Licence
+
+The original material — layout, HTML/CSS, build tooling, and the typesetting of
+the sheets — is licensed **[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)**:
+share, print, and adapt it for non-commercial use, with credit, keeping
+derivatives under the same terms. Full text in [`LICENSE`](LICENSE).
+
+This does **not** cover the game itself. *Gloomhaven: Jaws of the Lion*, its
+rules, artwork, character names, and logos are the property of **Cephalofair
+Games**; these sheets are an unofficial fan-made reference, not affiliated with
+or endorsed by the publisher, and that content is not relicensed here. The
+bundled [Pirata One](https://fonts.google.com/specimen/Pirata+One) and
+[Alegreya](https://fonts.google.com/specimen/Alegreya) fonts are used under the
+SIL Open Font License.
